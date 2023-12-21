@@ -1,7 +1,6 @@
 class ArticlesController < ApplicationController
   def index
-        @articles = Article.all
-
+    @articles = Article.all
   end
 
   def show
@@ -21,6 +20,7 @@ class ArticlesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
   def edit
     @article = Article.find(params[:id])
   end
@@ -34,7 +34,15 @@ class ArticlesController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-    private
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    redirect_to root_path, status: :see_other
+  end
+
+  private
     def article_params
       params.require(:article).permit(:title, :body)
     end
